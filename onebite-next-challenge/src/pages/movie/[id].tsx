@@ -1,10 +1,24 @@
-import { useRouter } from "next/router";
+import movies from "@/mock/dummy.json";
+import style from "./[id].module.css";
 
-function Movie() {
-  const router = useRouter();
-  const { id } = router.query;
+export default function Page() {
+  const movie = movies[0];
 
-  return <h1>{id} 영화 상세페이지</h1>;
+  return (
+    <div className={style.container}>
+      <div
+        className={style.posterImg}
+        style={{ backgroundImage: `url('${movie.posterImgUrl}')` }}
+      >
+        <img src={movie.posterImgUrl} alt={movie.title} />
+      </div>
+      <div className={style.title}>{movie.title}</div>
+      <div className={style.info}>
+        {movie.releaseDate} / {movie.genres} / {movie.runtime}분
+      </div>
+      <div className={style.company}>{movie.company}</div>
+      <div className={style.subTitle}>{movie.subTitle}</div>
+      <div className={style.description}>{movie.description}</div>
+    </div>
+  );
 }
-
-export default Movie;
