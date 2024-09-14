@@ -1,9 +1,11 @@
-import movies from "@/mock/dummy.json";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+
+import fetchMovieDetail from "@/lib/fetchMovieDetail";
 import style from "./[id].module.css";
 
-export default function Page() {
-  const movie = movies[0];
-
+export default function Page({
+  movie,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className={style.container}>
       <div
@@ -22,3 +24,22 @@ export default function Page() {
     </div>
   );
 }
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const id = context.params?.id as string;
+  const movie = await fetchMovieDetail(Number(id));
+
+  if (!movie) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      movie,
+    },
+  };
+};

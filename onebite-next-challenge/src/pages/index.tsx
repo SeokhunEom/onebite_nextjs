@@ -3,13 +3,16 @@ import type { MovieData } from "@/types";
 import MovieItem from "@/components/MovieItem";
 import { ReactNode } from "react";
 import SearchableLayout from "@/components/SearchableLayout";
-import movies from "@/mock/dummy.json";
+import fetchMovies from "@/lib/fetchMovies";
+import fetchRandomMovies from "@/lib/fetchRandomMovies";
 import style from "./index.module.css";
 
-function Home() {
-  const recommendedMovies: MovieData[] = movies.slice(0, 3);
-  const allMovies: MovieData[] = movies;
+interface HomeProps {
+  allMovies: MovieData[];
+  recommendedMovies: MovieData[];
+}
 
+function Home({ allMovies, recommendedMovies }: HomeProps) {
   return (
     <div className={style.container}>
       <section className={style.section}>
@@ -38,6 +41,20 @@ function Home() {
 
 Home.getLayout = (page: ReactNode) => {
   return <SearchableLayout>{page}</SearchableLayout>;
+};
+
+export const getStaticProps = async () => {
+  const [allMovies, recommendedMovies] = await Promise.all([
+    fetchMovies(),
+    fetchRandomMovies(),
+  ]);
+
+  return {
+    props: {
+      allMovies,
+      recommendedMovies,
+    },
+  };
 };
 
 export default Home;
