@@ -1,5 +1,5 @@
+import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import type { MovieData } from "@/types";
 import MovieItem from "@/components/MovieItem";
 import { ReactNode } from "react";
 import SearchableLayout from "@/components/SearchableLayout";
@@ -7,12 +7,10 @@ import fetchMovies from "@/lib/fetchMovies";
 import fetchRandomMovies from "@/lib/fetchRandomMovies";
 import style from "./index.module.css";
 
-interface HomeProps {
-  allMovies: MovieData[];
-  recommendedMovies: MovieData[];
-}
-
-function Home({ allMovies, recommendedMovies }: HomeProps) {
+function Home({
+  allMovies,
+  recommendedMovies,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className={style.container}>
       <section className={style.section}>
