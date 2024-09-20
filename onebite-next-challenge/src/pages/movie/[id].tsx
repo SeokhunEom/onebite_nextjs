@@ -1,5 +1,6 @@
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
+import Head from "next/head";
 import fetchMovieDetail from "@/lib/fetchMovieDetail";
 import fetchMovies from "@/lib/fetchMovies";
 import style from "./[id].module.css";
@@ -11,25 +12,49 @@ export default function Page({
   const router = useRouter();
 
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <Head>
+          <title>한입 씨네마</title>
+          <meta property="og:title" content="한입 씨네마" />
+          <meta property="og:image" content="/thumbnail.png" />
+          <meta
+            property="og:description"
+            content="한입 씨네마에서 영화를 검색하고 추천받아보세요."
+          />
+        </Head>
+        <div>Loading...</div>
+      </>
+    );
   }
 
   return (
-    <div className={style.container}>
-      <div
-        className={style.posterImg}
-        style={{ backgroundImage: `url('${movie.posterImgUrl}')` }}
-      >
-        <img src={movie.posterImgUrl} alt={movie.title} />
+    <>
+      <Head>
+        <title>한입 씨네마 | {movie.title}</title>
+        <meta property="og:title" content={`한입 씨네마 | ${movie.title}`} />
+        <meta property="og:image" content={movie.posterImgUrl} />
+        <meta
+          property="og:description"
+          content={`${movie.title} - ${movie.description}`}
+        />
+      </Head>
+      <div className={style.container}>
+        <div
+          className={style.posterImg}
+          style={{ backgroundImage: `url('${movie.posterImgUrl}')` }}
+        >
+          <img src={movie.posterImgUrl} alt={movie.title} />
+        </div>
+        <div className={style.title}>{movie.title}</div>
+        <div className={style.info}>
+          {movie.releaseDate} / {movie.genres} / {movie.runtime}분
+        </div>
+        <div className={style.company}>{movie.company}</div>
+        <div className={style.subTitle}>{movie.subTitle}</div>
+        <div className={style.description}>{movie.description}</div>
       </div>
-      <div className={style.title}>{movie.title}</div>
-      <div className={style.info}>
-        {movie.releaseDate} / {movie.genres} / {movie.runtime}분
-      </div>
-      <div className={style.company}>{movie.company}</div>
-      <div className={style.subTitle}>{movie.subTitle}</div>
-      <div className={style.description}>{movie.description}</div>
-    </div>
+    </>
   );
 }
 

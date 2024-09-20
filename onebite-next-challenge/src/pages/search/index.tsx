@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 
+import Head from "next/head";
 import Link from "next/link";
 import { MovieData } from "@/types";
 import MovieItem from "@/components/MovieItem";
@@ -29,13 +30,24 @@ function Page() {
   }, [q]);
 
   return (
-    <ul className={style.grid3}>
-      {movies.map((movie) => (
-        <Link href={`/movie/${movie.id}`} key={movie.id}>
-          <MovieItem movie={movie} />
-        </Link>
-      ))}
-    </ul>
+    <>
+      <Head>
+        <title>한입 씨네마 | 검색: {q}</title>
+        <meta property="og:title" content="한입 씨네마" />
+        <meta property="og:image" content="/thumbnail.png" />
+        <meta
+          property="og:description"
+          content="한입 씨네마에서 영화를 검색하고 추천받아보세요."
+        />
+      </Head>
+      <ul className={style.grid3}>
+        {movies.map((movie) => (
+          <Link href={`/movie/${movie.id}`} key={movie.id}>
+            <MovieItem movie={movie} />
+          </Link>
+        ))}
+      </ul>
+    </>
   );
 }
 
