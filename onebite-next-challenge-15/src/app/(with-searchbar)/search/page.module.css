@@ -1,0 +1,10 @@
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0;
+}
+
+.grid3 a {
+  flex: 1 1 30%;
+}
