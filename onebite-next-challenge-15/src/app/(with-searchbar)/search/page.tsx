@@ -1,7 +1,5 @@
-import Link from "next/link";
-import MovieItem from "@/components/MovieItem";
-import data from "@/mock/dummy.json";
-import style from "./page.module.css";
+import { MovieData } from "@/types";
+import MovieList from "@/components/MovieList";
 
 interface PageProps {
   searchParams: {
@@ -9,20 +7,19 @@ interface PageProps {
   };
 }
 
-function Page({ searchParams }: PageProps) {
-  const movies = data.filter((movie) =>
-    movie.title.includes(searchParams.q as string)
+async function Page({ searchParams }: PageProps) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/search?q=${searchParams.q}`,
+    {
+      cache: "force-cache",
+    }
   );
+  if (!response.ok) {
+    return <div>오류가 발생했습니다...</div>;
+  }
+  const movies: MovieData[] = await response.json();
 
-  return (
-    <ul className={style.grid3}>
-      {movies.map((movie) => (
-        <Link href={`/movie/${movie.id}`} key={movie.id}>
-          <MovieItem movie={movie} />
-        </Link>
-      ))}
-    </ul>
-  );
+  return <MovieList movies={movies} rowItems={3} keyName="SearchMovie" />;
 }
 
 export default Page;
