@@ -25,3 +25,16 @@ async function Page({ params }: PageProps) {
 }
 
 export default Page;
+
+export async function generateStaticParams() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie`
+  );
+  const movies: MovieData[] = await response.json();
+
+  return movies.map((movie) => ({
+    id: String(movie.id),
+  }));
+}
+
+export const dynamicParams = false;

@@ -1,4 +1,5 @@
 import SearchBar from "@/components/SearchBar";
+import { Suspense } from "react";
 
 interface LayoutProps {
   readonly children: React.ReactNode;
@@ -7,7 +8,9 @@ interface LayoutProps {
 function Layout({ children }: LayoutProps) {
   return (
     <div>
-      <SearchBar />
+      <Suspense fallback={<></>}>
+        <SearchBar />
+      </Suspense>
       {children}
     </div>
   );

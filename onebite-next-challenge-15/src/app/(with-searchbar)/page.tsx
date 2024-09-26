@@ -1,5 +1,6 @@
 import { MovieData } from "@/types";
 import MovieList from "@/components/MovieList";
+import { Suspense } from "react";
 import style from "./page.module.css";
 
 async function Home() {
