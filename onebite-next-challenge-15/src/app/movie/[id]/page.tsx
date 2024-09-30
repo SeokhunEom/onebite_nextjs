@@ -1,6 +1,9 @@
 import { MovieData } from "@/types";
 import MovieDetail from "@/components/MovieDetail";
+import ReviewEditor from "@/components/ReviewEditor";
+import ReviewList from "@/components/ReviewList";
 import { notFound } from "next/navigation";
+import style from "./page.module.css";
 
 interface PageProps {
   params: {
@@ -21,7 +24,13 @@ async function Page({ params }: PageProps) {
   }
   const movie: MovieData = await response.json();
 
-  return <MovieDetail movie={movie} />;
+  return (
+    <div className={style.container}>
+      <MovieDetail movie={movie} />
+      <ReviewEditor movieId={movie.id} />
+      <ReviewList movieId={movie.id} />
+    </div>
+  );
 }
 
 export default Page;
