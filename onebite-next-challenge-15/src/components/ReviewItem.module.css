@@ -26,12 +26,3 @@
   font-size: 16px;
   padding: 20px 0px;
 }
-
-.delete_button {
-  color: gray;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}

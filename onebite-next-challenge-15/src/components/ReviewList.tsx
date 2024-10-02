@@ -8,7 +8,8 @@ interface ReviewListProps {
 
 async function ReviewList({ movieId }: ReviewListProps) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/movie/${movieId}`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/movie/${movieId}`,
+    { next: { tags: [`review-${movieId}`] } }
   );
   if (!response.ok) {
     return <div>오류가 발생했습니다 ...</div>;

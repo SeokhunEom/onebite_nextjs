@@ -1,4 +1,5 @@
 import { ReviewData } from "@/types";
+import ReviewDeleteButton from "./ReviewDeleteButton";
 import style from "./ReviewItem.module.css";
 
 function ReviewItem({ id, content, author, createdAt, movieId }: ReviewData) {
@@ -14,7 +15,7 @@ function ReviewItem({ id, content, author, createdAt, movieId }: ReviewData) {
         <div className={style.date}>{dateStr}</div>
       </div>
       <div className={style.content}>{content}</div>
-      <div className={style.delete_button}>🗑️ 리뷰 삭제하기</div>
+      <ReviewDeleteButton movieId={movieId} reviewId={id} />
     </div>
   );
 }

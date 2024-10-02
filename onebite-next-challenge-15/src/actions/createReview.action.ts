@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
+
 async function createReviewAction(_: any, formData: FormData) {
   const movieId = formData.get("movieId")?.toString();
   const content = formData.get("content")?.toString();
@@ -24,6 +26,7 @@ async function createReviewAction(_: any, formData: FormData) {
       throw new Error(response.statusText);
     }
 
+    revalidateTag(`review-${movieId}`);
     return {
       status: true,
       error: "",
