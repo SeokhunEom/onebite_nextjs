@@ -9,11 +9,12 @@ export const metadata: Metadata = {
   description: "한입 씨네마에서 영화를 검색하고 추천받아보세요.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+  modal: React.ReactNode;
+}
+
+export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
     <html lang="ko">
       <body>
@@ -23,6 +24,8 @@ export default function RootLayout({
           </header>
           <main>{children}</main>
         </div>
+        {modal}
+        <div id="modal-root"></div>
       </body>
     </html>
   );

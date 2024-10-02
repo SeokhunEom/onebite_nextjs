@@ -1,0 +1,21 @@
+.modal {
+  width: 80%;
+  max-width: 640px;
+  height: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid gray;
+  background-color: black;
+  color: white;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
