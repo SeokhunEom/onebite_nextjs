@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { MovieData } from "@/types";
 import MovieDetail from "@/components/MovieDetail";
 import ReviewEditor from "@/components/ReviewEditor";
@@ -8,6 +9,29 @@ import style from "./page.module.css";
 interface PageProps {
   params: {
     id: string | string[];
+  };
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata | null> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/${params.id}`,
+    { cache: "force-cache" }
+  );
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  const movie: MovieData = await response.json();
+
+  return {
+    title: `${movie.title} - 한입 씨네마`,
+    description: movie.description,
+    openGraph: {
+      title: `${movie.title} - 한입 씨네마`,
+      description: movie.description,
+      images: [movie.posterImgUrl],
+    },
   };
 }
 

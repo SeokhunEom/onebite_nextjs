@@ -1,8 +1,8 @@
+import { Metadata } from "next";
 import { MovieData } from "@/types";
 import MovieList from "@/components/MovieList";
 import MovieListSkeleton from "@/components/MovieListSkeleton";
 import { Suspense } from "react";
-import { delay } from "@/utils/delay";
 
 interface PageProps {
   searchParams: {
@@ -10,8 +10,19 @@ interface PageProps {
   };
 }
 
+export function generateMetadata({ searchParams }: PageProps): Metadata {
+  return {
+    title: `${searchParams.q} - 한입 씨네마 검색`,
+    description: `${searchParams.q} 검색 결과입니다`,
+    openGraph: {
+      title: `${searchParams.q} : 한입 씨네마 검색`,
+      description: `${searchParams.q} 검색 결과입니다`,
+      images: ["/thumbnail.png"],
+    },
+  };
+}
+
 async function SearchResult({ searchParams }: PageProps) {
-  await delay(2000);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/search?q=${searchParams.q}`,
     {

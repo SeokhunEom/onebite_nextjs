@@ -14,7 +14,11 @@ async function MovieList({ keyName, movies, rowItems }: MovieListProps) {
     <ul className={rowItems === 3 ? `${style.grid3}` : `${style.grid5}`}>
       {movies.map((movie) => (
         <Link href={`/movie/${movie.id}`} key={`${keyName}${movie.id}`}>
-          <MovieItem key={movie.id} movie={movie} />
+          <MovieItem
+            key={movie.id}
+            movie={movie}
+            imgSize={rowItems == 3 ? "lg" : "md"}
+          />
         </Link>
       ))}
     </ul>

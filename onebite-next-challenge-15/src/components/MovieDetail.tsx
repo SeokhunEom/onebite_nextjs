@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MovieData } from "@/types";
 import style from "./MovieDetail.module.css";
 
@@ -23,7 +24,7 @@ function MovieDetail({ movie }: MovieDetailProps) {
         className={style.posterImg}
         style={{ backgroundImage: `url('${posterImgUrl}')` }}
       >
-        <img src={posterImgUrl} alt={title} />
+        <Image src={posterImgUrl} alt={title} width={240} height={300} />
       </div>
       <div className={style.title}>{title}</div>
       <div className={style.info}>
